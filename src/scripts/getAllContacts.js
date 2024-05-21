@@ -5,9 +5,20 @@ export const getAllContacts = async () => {
     try {
         const data = await fs.readFile(PATH_DB, 'utf8');
         console.log('Вміст файлу:', data);
-      } catch (err) {
-        console.error('Помилка читання файлу:', err);
-      }
+        return data; 
+    } catch (err) {
+        console.error('Помилка при читанні файлу:', err);
+        throw err; 
+    }
 };
 
-console.log(await getAllContacts());
+async function main() {
+    try {
+        const contacts = await getAllContacts();
+        console.log(contacts);
+    } catch (error) {
+        console.error('Помилка у функції main:', error);
+    }
+}
+
+main();

@@ -5,8 +5,14 @@ import { createFakeContact } from '../utils/createFakeContact.js';
 const generateContacts = async (number) => {
   const newContact = createFakeContact();
   try {
-    const data = await fs.readFile(PATH_DB, 'utf8');
-    const contacts = JSON.parse(data);
+    let data = '[]';
+    try {
+      data = await fs.readFile(PATH_DB, 'utf8');
+    } catch (readErr) {
+      console.error('Помилка читання файлу:', readErr);
+    }
+
+    let contacts = JSON.parse(data);
 
     for (let i = 0; i < number; i++) {
       contacts.push(newContact);
